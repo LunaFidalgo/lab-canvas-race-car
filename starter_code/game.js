@@ -10,7 +10,6 @@ function Game(canvasId) {
   ];
 
   this.car = new Car(this.canvas, this.ctx);
-
   this.obstacle = [];
 }
 
@@ -26,13 +25,13 @@ Game.prototype.startGame = function() {
     }.bind(this),
     10
   );
-
   setInterval(this.anadirObstaculos.bind(this), 5000);
 };
 
 Game.prototype.anadirObstaculos = function() {
   if(this.obstacle.length < 10)this.obstacle.push(new Obstacle(this.canvas, this.ctx));
 };
+
 Game.prototype.dibujarCarretera = function() {
   var d = 5;
   this.road[0].y += d;
@@ -40,9 +39,8 @@ Game.prototype.dibujarCarretera = function() {
     this.road[0].y = 0;
   }
   this.road[1].y = this.road[0].y - this.h;
+  this.road.forEach(e => e.draw());
 
-  this.road[0].draw();
-  this.road[1].draw();
 };
 
 Game.prototype.clear = function() {
@@ -51,14 +49,11 @@ Game.prototype.clear = function() {
 
 Game.prototype.dibujarObstaculos = function() {
   var d = 1;
-
   for (var i = 0; i < this.obstacle.length; i++) {
     this.obstacle[i].y += d;
-
     this.obstacle[i].draw();
   }
 };
-
 
 Game.prototype.colisiones = function() {
   for (var i = 0; i < this.obstacle.length; i++) {
@@ -66,9 +61,8 @@ Game.prototype.colisiones = function() {
       this.car.y < this.obstacle[i].y + this.obstacle[i].alto && this.car.y + this.car.alto > this.obstacle[i].y) {
       clearInterval(this.clearInterval);
     } else {
-      console.log("No choca")
+      console.log("Enhorabuena Michael, le dice Kitt a David Haselhoff");
     }
-
     if( this.obstacle[i].y >= this.h){
       this.obstacle.splice(i, 1);
     }
