@@ -31,7 +31,7 @@ Game.prototype.startGame = function() {
 };
 
 Game.prototype.anadirObstaculos = function() {
-  if(this.obstacle.length < 100)this.obstacle.push(new Obstacle(this.canvas, this.ctx));
+  if(this.obstacle.length < 10)this.obstacle.push(new Obstacle(this.canvas, this.ctx));
 };
 Game.prototype.dibujarCarretera = function() {
   var d = 5;
@@ -59,20 +59,24 @@ Game.prototype.dibujarObstaculos = function() {
   }
 };
 
+
 Game.prototype.colisiones = function() {
   for (var i = 0; i < this.obstacle.length; i++) {
-
-    if((Math.abs(this.obstacle[i].x - this.car.x) < Math.abs(this.car.ancho/2 + this.obstacle[i].ancho/2))
-    && Math.abs((this.car.y - this.obstacle[i].y) < this.obstacle[i].alto ))
-    {
-     clearInterval(this.clearInterval);
-    }else{
-    
-    
+    if (this.car.x < this.obstacle[i].x + this.obstacle[i].ancho && this.car.x + this.car.ancho > this.obstacle[i].x &&
+      this.car.y < this.obstacle[i].y + this.obstacle[i].alto && this.car.y + this.car.alto > this.obstacle[i].y) {
+      clearInterval(this.clearInterval);
+    } else {
+      console.log("No choca")
     }
-  //borrar obstaculos que ya no están en el canvas
+
     if( this.obstacle[i].y >= this.h){
       this.obstacle.splice(i, 1);
     }
   }
 };
+
+
+/////////////////////////////////////////////////////////////////////////////////
+///////////////////// COLISIONES GÉNERICAS //////////////////////////////////////
+/*if (object1.x < object2.x + object2.width && object1.x + object1.width > object2.x &&
+  object1.y < object2.y + object2.height && object1.y + object1.height > object2.y) { }*/
